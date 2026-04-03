@@ -1,0 +1,54 @@
+export type CardId = string;
+export type BenefitId = string;
+
+export type BenefitPeriod = "monthly" | "quarterly" | "semi-annual" | "annual";
+
+export type CapPeriod = "monthly" | "quarterly" | "semi-annual" | "annual";
+
+export interface SpendingMultiplier {
+  category: string;
+  multiplier: number;
+  notes?: string;
+  capAmount?: number;
+  capPeriod?: CapPeriod;
+}
+
+export interface UsageRecord {
+  periodKey: string;
+  used: boolean;
+  usedDate?: string;
+  notes?: string;
+}
+
+export interface Benefit {
+  id: BenefitId;
+  name: string;
+  value: number;
+  period: BenefitPeriod;
+  description?: string;
+  usageHistory: UsageRecord[];
+}
+
+export interface CreditCard {
+  id: CardId;
+  name: string;
+  issuer: string;
+  annualFee: number;
+  cardColor: string;
+  multipliers: SpendingMultiplier[];
+  benefits: Benefit[];
+  lastFourDigits?: string;
+  notes?: string;
+}
+
+export interface ExpirationItem {
+  cardId: string;
+  cardName: string;
+  cardColor: string;
+  benefitId: string;
+  benefitName: string;
+  value: number;
+  period: BenefitPeriod;
+  endDate: Date;
+  daysRemaining: number;
+}
