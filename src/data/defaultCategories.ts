@@ -8,8 +8,9 @@ export const DEFAULT_CATEGORIES = [
 	"Streaming",
 	"Online Shopping",
 	"Transit",
+	"Rideshare",
+	"Food Delivery",
 	"Drugstores",
-	"Home Improvement",
 	"Entertainment",
 	"Everything Else",
 ] as const;
