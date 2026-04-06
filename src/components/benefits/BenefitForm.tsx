@@ -21,7 +21,7 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 	);
 	const [description, setDescription] = useState(benefit?.description ?? "");
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!name.trim() || !value) return;
 
@@ -43,10 +43,6 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 		onClose();
 	};
 
-	const inputClass =
-		"w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent";
-	const labelClass = "block text-sm font-medium text-gray-700 mb-1";
-
 	return (
 		<Modal
 			open={open}
@@ -55,19 +51,19 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 		>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
-					<label className={labelClass}>Benefit Name *</label>
+					<label className="form-label">Benefit Name *</label>
 					<input
 						type="text"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 						placeholder="e.g., Uber Credit, Streaming Credit"
-						className={inputClass}
+						className="form-input"
 						required
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Value per Period ($) *</label>
+					<label className="form-label">Value per Period ($) *</label>
 					<input
 						type="number"
 						value={value}
@@ -75,17 +71,17 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 						placeholder="10"
 						min="0"
 						step="0.01"
-						className={inputClass}
+						className="form-input"
 						required
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Period</label>
+					<label className="form-label">Period</label>
 					<select
 						value={period}
 						onChange={(e) => setPeriod(e.target.value as BenefitPeriod)}
-						className={inputClass}
+						className="form-input"
 					>
 						<option value="monthly">Monthly</option>
 						<option value="quarterly">Quarterly</option>
@@ -95,13 +91,13 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 				</div>
 
 				<div>
-					<label className={labelClass}>Description</label>
+					<label className="form-label">Description</label>
 					<textarea
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 						placeholder="e.g., Use on Uber Eats or rides"
 						rows={2}
-						className={inputClass}
+						className="form-input"
 					/>
 				</div>
 
@@ -109,13 +105,13 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 					<button
 						type="button"
 						onClick={onClose}
-						className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+						className="btn-secondary"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
+						className="btn-primary"
 					>
 						{benefit ? "Save Changes" : "Add Benefit"}
 					</button>

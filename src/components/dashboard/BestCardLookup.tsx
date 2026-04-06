@@ -23,8 +23,8 @@ export function BestCardLookup({ cards }: BestCardLookupProps) {
 		: [];
 
 	return (
-		<div className="bg-white rounded-xl border border-gray-200">
-			<div className="px-5 py-4 border-b border-gray-200">
+		<div className="card">
+			<div className="card-header">
 				<h2 className="font-semibold text-gray-900 flex items-center gap-2">
 					<Search size={18} className="text-gray-400" />
 					Best Card by Category
@@ -35,7 +35,7 @@ export function BestCardLookup({ cards }: BestCardLookupProps) {
 				<select
 					value={selectedCategory}
 					onChange={(e) => setSelectedCategory(e.target.value)}
-					className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+					className="form-input bg-white"
 				>
 					{allCategories.length === 0 && (
 						<option value="">No categories yet</option>
@@ -48,7 +48,7 @@ export function BestCardLookup({ cards }: BestCardLookupProps) {
 				</select>
 			</div>
 
-			<div className="divide-y divide-gray-100 max-h-64 overflow-y-auto">
+			<div className="divide-y divide-gray-100 max-h-75 overflow-y-auto">
 				{rankings.length === 0 ? (
 					<p className="px-5 py-6 text-center text-sm text-gray-400">
 						{allCategories.length === 0

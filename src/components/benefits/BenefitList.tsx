@@ -32,12 +32,13 @@ export function BenefitList({ cardId, benefits }: BenefitListProps) {
 	).filter((p) => grouped[p].length > 0);
 
 	return (
-		<div className="bg-white rounded-xl border border-gray-200">
-			<div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+		<div className="card">
+			<div className="card-header flex items-center justify-between">
 				<h2 className="font-semibold text-gray-900">Benefits & Credits</h2>
 				<button
+					type="button"
 					onClick={() => setShowForm(true)}
-					className="flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+					className="btn-link-sm"
 				>
 					<Plus size={16} />
 					Add

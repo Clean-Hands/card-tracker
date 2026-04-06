@@ -14,8 +14,8 @@ export function UnusedBenefitsAlert({ cards }: UnusedBenefitsAlertProps) {
 	const urgent = expirations.filter((e) => e.daysRemaining <= 7);
 
 	return (
-		<div className="bg-white rounded-xl border border-gray-200">
-			<div className="px-5 py-4 border-b border-gray-200">
+		<div className="card">
+			<div className="card-header">
 				<h2 className="font-semibold text-gray-900 flex items-center gap-2">
 					<AlertTriangle
 						size={18}
@@ -25,7 +25,7 @@ export function UnusedBenefitsAlert({ cards }: UnusedBenefitsAlertProps) {
 				</h2>
 			</div>
 
-			<div className="divide-y divide-gray-100 max-h-80 overflow-y-auto">
+			<div className="divide-y divide-gray-100 max-h-91 overflow-y-auto">
 				{expirations.length === 0 ? (
 					<div className="px-5 py-8 text-center">
 						<Check size={32} className="mx-auto text-green-400 mb-2" />
@@ -58,19 +58,20 @@ export function UnusedBenefitsAlert({ cards }: UnusedBenefitsAlertProps) {
 								<p className="text-xs text-gray-400">{item.cardName}</p>
 							</div>
 							<span
-								className={`text-xs font-medium px-2 py-1 rounded flex-shrink-0 ${
+								className={`flex-shrink-0 ${
 									item.daysRemaining <= 3
-										? "bg-red-100 text-red-700"
+										? "badge-urgent"
 										: item.daysRemaining <= 7
-											? "bg-amber-100 text-amber-700"
-											: "bg-gray-100 text-gray-500"
+											? "badge-warning"
+											: "badge-neutral"
 								}`}
 							>
 								{item.daysRemaining}d
 							</span>
 							<button
+								type="button"
 								onClick={() => toggleBenefitUsed(item.cardId, item.benefitId)}
-								className="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex-shrink-0"
+								className="btn-link-sm text-xs flex-shrink-0"
 							>
 								Mark Used
 							</button>

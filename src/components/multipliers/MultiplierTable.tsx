@@ -87,12 +87,13 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 	};
 
 	return (
-		<div className="bg-white rounded-xl border border-gray-200">
-			<div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+		<div className="card">
+			<div className="card-header flex items-center justify-between">
 				<h2 className="font-semibold text-gray-900">Spending Multipliers</h2>
 				<button
+					type="button"
 					onClick={() => setAdding(true)}
-					className="flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+					className="btn-link-sm"
 				>
 					<Plus size={16} />
 					Add
@@ -126,14 +127,17 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 									/>
 									<span className="text-sm text-gray-500">x</span>
 									<button
+										type="button"
+										title="Save"
 										onClick={() => saveEdit(m.category)}
 										className="p-1 text-green-600 hover:bg-green-50 rounded"
 									>
 										<Save size={14} />
 									</button>
 									<button
+										type="button"
 										onClick={() => setEditingCategory(null)}
-										className="p-1 text-gray-400 hover:text-gray-600 rounded"
+										className="btn-secondary px-2 py-1 text-xs"
 									>
 										Cancel
 									</button>
@@ -143,7 +147,7 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 									value={editNotes}
 									onChange={(e) => setEditNotes(e.target.value)}
 									placeholder="Notes (optional)"
-									className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+									className="form-input"
 								/>
 								<div className="flex gap-2">
 									<input
@@ -151,12 +155,12 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 										value={editCap}
 										onChange={(e) => setEditCap(e.target.value)}
 										placeholder="Cap $ (optional)"
-										className="flex-1 px-2 py-1 border border-gray-300 rounded text-sm"
+										className="form-input !w-auto flex-1"
 									/>
 									<select
 										value={editCapPeriod}
 										onChange={(e) => setEditCapPeriod(e.target.value as CapPeriod)}
-										className="px-2 py-1 border border-gray-300 rounded text-sm bg-white"
+										className="form-input !w-auto"
 									>
 										<option value="monthly">per month</option>
 										<option value="quarterly">per quarter</option>
@@ -187,8 +191,10 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 									)}
 								</div>
 								<button
+									type="button"
+									title="Remove category"
 									onClick={() => removeMultiplier(cardId, m.category)}
-									className="p-1 text-gray-300 hover:text-red-500 rounded"
+									className="btn-icon-delete"
 								>
 									<Trash2 size={14} />
 								</button>
@@ -203,7 +209,7 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 							<select
 								value={newCategory}
 								onChange={(e) => setNewCategory(e.target.value)}
-								className="flex-1 px-2 py-1.5 border border-gray-300 rounded text-sm bg-white"
+								className="form-input !w-auto flex-1"
 							>
 								<option value="">Select category...</option>
 								{availableCategories.map((c) => (
@@ -229,7 +235,7 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 								value={customCategory}
 								onChange={(e) => setCustomCategory(e.target.value)}
 								placeholder="Type custom category name..."
-								className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm"
+								className="form-input"
 								autoFocus
 							/>
 						)}
@@ -238,7 +244,7 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 							value={newNotes}
 							onChange={(e) => setNewNotes(e.target.value)}
 							placeholder="Notes (optional, e.g., 'enrolled quarterly categories')"
-							className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm"
+							className="form-input"
 						/>
 						<div className="flex gap-2">
 							<input
@@ -246,12 +252,12 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 								value={newCap}
 								onChange={(e) => setNewCap(e.target.value)}
 								placeholder="Cap $ (optional)"
-								className="flex-1 px-2 py-1.5 border border-gray-300 rounded text-sm"
+								className="form-input !w-auto flex-1"
 							/>
 							<select
 								value={newCapPeriod}
 								onChange={(e) => setNewCapPeriod(e.target.value as CapPeriod)}
-								className="px-2 py-1.5 border border-gray-300 rounded text-sm bg-white"
+								className="form-input !w-auto"
 							>
 								<option value="monthly">per month</option>
 								<option value="quarterly">per quarter</option>
@@ -261,14 +267,16 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 						</div>
 						<div className="flex gap-2 justify-end">
 							<button
+								type="button"
 								onClick={() => setAdding(false)}
-								className="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-200 rounded"
+								className="btn-secondary"
 							>
 								Cancel
 							</button>
 							<button
+								type="button"
 								onClick={handleAdd}
-								className="px-3 py-1.5 text-sm text-white bg-indigo-600 hover:bg-indigo-700 rounded"
+								className="btn-primary"
 							>
 								Add
 							</button>

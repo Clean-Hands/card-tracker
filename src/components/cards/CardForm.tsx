@@ -31,7 +31,7 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 	);
 	const [notes, setNotes] = useState(card?.notes ?? "");
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!name.trim() || !issuer.trim()) return;
 
@@ -54,10 +54,6 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 		onClose();
 	};
 
-	const inputClass =
-		"w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent";
-	const labelClass = "block text-sm font-medium text-gray-700 mb-1";
-
 	return (
 		<Modal
 			open={open}
@@ -66,43 +62,43 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 		>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
-					<label className={labelClass}>Card Name *</label>
+					<label className="form-label">Card Name *</label>
 					<input
 						type="text"
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 						placeholder="e.g., Sapphire Reserve"
-						className={inputClass}
+						className="form-input"
 						required
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Issuer *</label>
+					<label className="form-label">Issuer *</label>
 					<input
 						type="text"
 						value={issuer}
 						onChange={(e) => setIssuer(e.target.value)}
 						placeholder="e.g., Chase"
-						className={inputClass}
+						className="form-input"
 						required
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Annual Fee ($)</label>
+					<label className="form-label">Annual Fee ($)</label>
 					<input
 						type="number"
 						value={annualFee}
 						onChange={(e) => setAnnualFee(e.target.value)}
 						min="0"
 						step="1"
-						className={inputClass}
+						className="form-input"
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Point Value (cents per point)</label>
+					<label className="form-label">Point Value (cents per point)</label>
 					<input
 						type="number"
 						value={pointValue}
@@ -110,7 +106,7 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 						min="0.1"
 						step="0.1"
 						placeholder="1.0"
-						className={inputClass}
+						className="form-input"
 					/>
 					<p className="text-xs text-gray-400 mt-1">
 						e.g., 1.2 for Delta SkyMiles, 2.0 for Chase Ultimate Rewards via travel portal
@@ -118,18 +114,18 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 				</div>
 
 				<div>
-					<label className={labelClass}>Rewards Currency</label>
+					<label className="form-label">Rewards Currency</label>
 					<input
 						type="text"
 						value={rewardsCurrency}
 						onChange={(e) => setRewardsCurrency(e.target.value)}
 						placeholder="e.g., SkyMiles, Ultimate Rewards, ThankYou Points"
-						className={inputClass}
+						className="form-input"
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Card Color</label>
+					<label className="form-label">Card Color</label>
 					<div className="flex items-center gap-3">
 						<div className="relative">
 							<input
@@ -148,6 +144,7 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 								<button
 									key={color}
 									type="button"
+									title={color}
 									onClick={() => setCardColor(color)}
 									className={`w-6 h-6 rounded-full border-2 transition-all ${
 										cardColor === color
@@ -162,7 +159,7 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 				</div>
 
 				<div>
-					<label className={labelClass}>Last 4 Digits</label>
+					<label className="form-label">Last 4 Digits</label>
 					<input
 						type="text"
 						value={lastFourDigits}
@@ -171,18 +168,18 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 						}
 						placeholder="1234"
 						maxLength={4}
-						className={inputClass}
+						className="form-input"
 					/>
 				</div>
 
 				<div>
-					<label className={labelClass}>Notes</label>
+					<label className="form-label">Notes</label>
 					<textarea
 						value={notes}
 						onChange={(e) => setNotes(e.target.value)}
 						placeholder="Any notes about this card..."
 						rows={2}
-						className={inputClass}
+						className="form-input"
 					/>
 				</div>
 
@@ -190,13 +187,13 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 					<button
 						type="button"
 						onClick={onClose}
-						className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+						className="btn-secondary"
 					>
 						Cancel
 					</button>
 					<button
 						type="submit"
-						className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
+						className="btn-primary"
 					>
 						{card ? "Save Changes" : "Add Card"}
 					</button>

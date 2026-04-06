@@ -26,8 +26,9 @@ export function CardList() {
 					</p>
 				</div>
 				<button
+					type="button"
 					onClick={() => setShowForm(true)}
-					className="flex items-center gap-2 px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+					className="btn-primary flex items-center gap-2"
 				>
 					<Plus size={18} />
 					Add Card
@@ -35,7 +36,7 @@ export function CardList() {
 			</div>
 
 			{cards.length === 0 ? (
-				<div className="text-center py-16 bg-white rounded-xl border border-gray-200">
+				<div className="card text-center py-16">
 					<CreditCard size={48} className="mx-auto text-gray-300 mb-4" />
 					<h2 className="text-lg font-medium text-gray-900 mb-2">
 						No cards yet
@@ -44,8 +45,9 @@ export function CardList() {
 						Add your first credit card to start tracking rewards and benefits.
 					</p>
 					<button
+						type="button"
 						onClick={() => setShowForm(true)}
-						className="px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+						className="btn-primary"
 					>
 						Add Your First Card
 					</button>
@@ -55,7 +57,7 @@ export function CardList() {
 					{cards.map((card) => (
 						<div
 							key={card.id}
-							className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+							className="card overflow-hidden hover:shadow-md transition-shadow"
 						>
 							<div
 								className="h-3"
@@ -72,14 +74,18 @@ export function CardList() {
 									</Link>
 									<div className="flex gap-1">
 										<button
+											type="button"
+											title="Edit card"
 											onClick={() => setEditingId(card.id)}
-											className="p-1.5 text-gray-400 hover:text-gray-600 rounded-md hover:bg-gray-100"
+											className="btn-icon-edit"
 										>
 											<Edit2 size={14} />
 										</button>
 										<button
+											type="button"
+											title="Delete card"
 											onClick={() => setDeletingId(card.id)}
-											className="p-1.5 text-gray-400 hover:text-red-600 rounded-md hover:bg-red-50"
+											className="btn-icon-delete"
 										>
 											<Trash2 size={14} />
 										</button>
@@ -102,7 +108,7 @@ export function CardList() {
 
 								<Link
 									to={`/cards/${card.id}`}
-									className="mt-4 block text-center py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+									className="btn-link mt-4 block text-center py-2"
 								>
 									View Details
 								</Link>
@@ -136,17 +142,19 @@ export function CardList() {
 				</p>
 				<div className="flex gap-3 justify-end">
 					<button
+						type="button"
 						onClick={() => setDeletingId(null)}
-						className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+						className="btn-secondary"
 					>
 						Cancel
 					</button>
 					<button
+						type="button"
 						onClick={() => {
 							if (deletingId) deleteCard(deletingId);
 							setDeletingId(null);
 						}}
-						className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700"
+						className="btn-danger"
 					>
 						Delete
 					</button>

@@ -25,6 +25,9 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 		(endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
 	);
 
+	const badgeClass =
+		daysLeft <= 3 ? "badge-urgent" : daysLeft <= 7 ? "badge-warning" : "badge-neutral";
+
 	return (
 		<div
 			className={`px-5 py-3 flex items-center gap-3 ${
@@ -32,6 +35,8 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 			}`}
 		>
 			<button
+				type="button"
+				title={used ? "Mark unused" : "Mark used"}
 				onClick={() => toggleBenefitUsed(cardId, benefit.id)}
 				className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${
 					used
@@ -60,22 +65,10 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 						{getPeriodLabel(benefit.period)} &middot; {periodKey}
 					</span>
 					{!used && (
-						<span
-							className={`text-xs font-medium px-1.5 py-0.5 rounded ${
-								daysLeft <= 3
-									? "bg-red-100 text-red-700"
-									: daysLeft <= 7
-										? "bg-amber-100 text-amber-700"
-										: "bg-gray-100 text-gray-500"
-							}`}
-						>
-							{daysLeft}d left
-						</span>
+						<span className={badgeClass}>{daysLeft}d left</span>
 					)}
 					{used && (
-						<span className="text-xs font-medium px-1.5 py-0.5 rounded bg-green-100 text-green-700">
-							Redeemed
-						</span>
+						<span className="badge-success">Redeemed</span>
 					)}
 				</div>
 				{benefit.description && (
@@ -85,14 +78,18 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 
 			<div className="flex gap-1 flex-shrink-0">
 				<button
+					type="button"
+					title="Edit benefit"
 					onClick={onEdit}
-					className="p-1 text-gray-300 hover:text-gray-600 rounded"
+					className="btn-icon-edit"
 				>
 					<Edit2 size={13} />
 				</button>
 				<button
+					type="button"
+					title="Delete benefit"
 					onClick={() => deleteBenefit(cardId, benefit.id)}
-					className="p-1 text-gray-300 hover:text-red-500 rounded"
+					className="btn-icon-delete"
 				>
 					<Trash2 size={13} />
 				</button>

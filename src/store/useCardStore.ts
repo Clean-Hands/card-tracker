@@ -67,6 +67,7 @@ export const useCardStore = create<CardStore>()(
 						} else {
 							multipliers.push(multiplier);
 						}
+						multipliers.sort((a, b) => b.multiplier - a.multiplier);
 						return { ...c, multipliers };
 					}),
 				})),

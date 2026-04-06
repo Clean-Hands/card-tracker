@@ -43,11 +43,7 @@ export function AppShell({ children }: AppShellProps) {
 	};
 
 	const linkClass = ({ isActive }: { isActive: boolean }) =>
-		`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-			isActive
-				? "bg-indigo-50 text-indigo-700"
-				: "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-		}`;
+		isActive ? "nav-link-active" : "nav-link";
 
 	return (
 		<div className="min-h-screen bg-gray-50 flex">
@@ -72,15 +68,17 @@ export function AppShell({ children }: AppShellProps) {
 
 				<div className="px-3 py-4 border-t border-gray-200 space-y-1">
 					<button
+						type="button"
 						onClick={handleExport}
-						className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors w-full"
+						className="nav-link w-full"
 					>
 						<Download size={18} />
 						Export Data
 					</button>
 					<button
+						type="button"
 						onClick={handleImport}
-						className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors w-full"
+						className="nav-link w-full"
 					>
 						<Upload size={18} />
 						Import Data

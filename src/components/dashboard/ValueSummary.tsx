@@ -45,7 +45,7 @@ export function ValueSummary({ cards }: ValueSummaryProps) {
 			{stats.map((stat) => (
 				<div
 					key={stat.label}
-					className="bg-white rounded-xl border border-gray-200 p-5"
+					className="card p-5"
 				>
 					<div className="flex items-center gap-3 mb-3">
 						<div className={`p-2 rounded-lg ${stat.bg}`}>

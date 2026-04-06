@@ -30,6 +30,7 @@ export function CardDetail() {
 	return (
 		<div>
 			<button
+				type="button"
 				onClick={() => navigate("/cards")}
 				className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 mb-6"
 			>
@@ -37,7 +38,7 @@ export function CardDetail() {
 				Back to My Cards
 			</button>
 
-			<div className="bg-white rounded-xl border border-gray-200 overflow-hidden mb-6">
+			<div className="card overflow-hidden mb-6">
 				<div className="h-3" style={{ backgroundColor: card.cardColor }} />
 				<div className="p-6">
 					<div className="flex items-start justify-between">
@@ -54,8 +55,10 @@ export function CardDetail() {
 								${card.annualFee}/yr
 							</span>
 							<button
+								type="button"
 								onClick={() => setEditing(true)}
-								className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
+								className="btn-icon-edit p-2"
+								title="Edit card"
 							>
 								<Edit2 size={18} />
 							</button>

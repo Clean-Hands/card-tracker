@@ -11,8 +11,8 @@ export function UpcomingExpirations({ cards }: UpcomingExpirationsProps) {
 	const expirations = getUpcomingExpirations(cards);
 
 	return (
-		<div className="bg-white rounded-xl border border-gray-200">
-			<div className="px-5 py-4 border-b border-gray-200">
+		<div className="card">
+			<div className="card-header">
 				<h2 className="font-semibold text-gray-900 flex items-center gap-2">
 					<Clock size={18} className="text-gray-400" />
 					Expiration Timeline
@@ -70,13 +70,13 @@ export function UpcomingExpirations({ cards }: UpcomingExpirationsProps) {
 									</td>
 									<td className="px-5 py-3">
 										<span
-											className={`text-xs font-medium px-2 py-1 rounded ${
+											className={`${
 												item.daysRemaining <= 3
-													? "bg-red-100 text-red-700"
+													? "badge-urgent"
 													: item.daysRemaining <= 7
-														? "bg-amber-100 text-amber-700"
-														: "bg-gray-100 text-gray-500"
-											}`}
+														? "badge-warning"
+														: "badge-neutral"
+											} px-2 py-1`}
 										>
 											{item.daysRemaining} day{item.daysRemaining !== 1 ? "s" : ""}
 										</span>
