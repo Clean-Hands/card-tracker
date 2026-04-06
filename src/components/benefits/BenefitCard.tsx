@@ -36,7 +36,6 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 		>
 			<button
 				type="button"
-				title={used ? "Mark unused" : "Mark used"}
 				onClick={() => toggleBenefitUsed(cardId, benefit.id)}
 				className={`flex-shrink-0 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${
 					used
@@ -79,7 +78,6 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 			<div className="flex gap-1 flex-shrink-0">
 				<button
 					type="button"
-					title="Edit benefit"
 					onClick={onEdit}
 					className="btn-icon-edit"
 				>
@@ -87,7 +85,6 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 				</button>
 				<button
 					type="button"
-					title="Delete benefit"
 					onClick={() => deleteBenefit(cardId, benefit.id)}
 					className="btn-icon-delete"
 				>

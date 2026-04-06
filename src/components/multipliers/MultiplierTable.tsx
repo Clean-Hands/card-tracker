@@ -128,7 +128,6 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 									<span className="text-sm text-gray-500">x</span>
 									<button
 										type="button"
-										title="Save"
 										onClick={() => saveEdit(m.category)}
 										className="p-1 text-green-600 hover:bg-green-50 rounded"
 									>
@@ -192,7 +191,6 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 								</div>
 								<button
 									type="button"
-									title="Remove category"
 									onClick={() => removeMultiplier(cardId, m.category)}
 									className="btn-icon-delete"
 								>

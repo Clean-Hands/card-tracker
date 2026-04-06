@@ -35,7 +35,6 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 					<h2 className="text-lg font-semibold text-gray-900">{title}</h2>
 					<button
 						type="button"
-						title="Close"
 						onClick={onClose}
 						className="text-gray-400 hover:text-gray-600 transition-colors"
 					>

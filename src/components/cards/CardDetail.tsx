@@ -58,7 +58,6 @@ export function CardDetail() {
 								type="button"
 								onClick={() => setEditing(true)}
 								className="btn-icon-edit p-2"
-								title="Edit card"
 							>
 								<Edit2 size={18} />
 							</button>

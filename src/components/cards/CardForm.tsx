@@ -144,7 +144,6 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 								<button
 									key={color}
 									type="button"
-									title={color}
 									onClick={() => setCardColor(color)}
 									className={`w-6 h-6 rounded-full border-2 transition-all ${
 										cardColor === color

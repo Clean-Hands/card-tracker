@@ -75,7 +75,6 @@ export function CardList() {
 									<div className="flex gap-1">
 										<button
 											type="button"
-											title="Edit card"
 											onClick={() => setEditingId(card.id)}
 											className="btn-icon-edit"
 										>
@@ -83,7 +82,6 @@ export function CardList() {
 										</button>
 										<button
 											type="button"
-											title="Delete card"
 											onClick={() => setDeletingId(card.id)}
 											className="btn-icon-delete"
 										>
