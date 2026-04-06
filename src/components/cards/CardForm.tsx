@@ -7,171 +7,201 @@ const DEFAULT_COLOR = "#4f46e5";
 import type { CreditCard } from "../../types";
 
 interface CardFormProps {
-  open: boolean;
-  onClose: () => void;
-  card?: CreditCard;
+	open: boolean;
+	onClose: () => void;
+	card?: CreditCard;
 }
 
 export function CardForm({ open, onClose, card }: CardFormProps) {
-  const addCard = useCardStore((s) => s.addCard);
-  const updateCard = useCardStore((s) => s.updateCard);
+	const addCard = useCardStore((s) => s.addCard);
+	const updateCard = useCardStore((s) => s.updateCard);
 
-  const [name, setName] = useState(card?.name ?? "");
-  const [issuer, setIssuer] = useState(card?.issuer ?? "");
-  const [annualFee, setAnnualFee] = useState(String(card?.annualFee ?? "0"));
-  const [cardColor, setCardColor] = useState(card?.cardColor ?? DEFAULT_COLOR);
-  const [lastFourDigits, setLastFourDigits] = useState(
-    card?.lastFourDigits ?? ""
-  );
-  const [notes, setNotes] = useState(card?.notes ?? "");
+	const [name, setName] = useState(card?.name ?? "");
+	const [issuer, setIssuer] = useState(card?.issuer ?? "");
+	const [annualFee, setAnnualFee] = useState(String(card?.annualFee ?? "0"));
+	const [cardColor, setCardColor] = useState(card?.cardColor ?? DEFAULT_COLOR);
+	const [pointValue, setPointValue] = useState(
+		String(card?.pointValue ?? "1")
+	);
+	const [rewardsCurrency, setRewardsCurrency] = useState(
+		card?.rewardsCurrency ?? ""
+	);
+	const [lastFourDigits, setLastFourDigits] = useState(
+		card?.lastFourDigits ?? ""
+	);
+	const [notes, setNotes] = useState(card?.notes ?? "");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !issuer.trim()) return;
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!name.trim() || !issuer.trim()) return;
 
-    if (card) {
-      updateCard(card.id, {
-        name: name.trim(),
-        issuer: issuer.trim(),
-        annualFee: Number(annualFee) || 0,
-        cardColor,
-        lastFourDigits: lastFourDigits.trim() || undefined,
-        notes: notes.trim() || undefined,
-      });
-    } else {
-      addCard({
-        name: name.trim(),
-        issuer: issuer.trim(),
-        annualFee: Number(annualFee) || 0,
-        cardColor,
-        lastFourDigits: lastFourDigits.trim() || undefined,
-        notes: notes.trim() || undefined,
-      });
-    }
-    onClose();
-  };
+		const shared = {
+			name: name.trim(),
+			issuer: issuer.trim(),
+			annualFee: Number(annualFee) || 0,
+			cardColor,
+			pointValue: Number(pointValue) || 1,
+			rewardsCurrency: rewardsCurrency.trim() || undefined,
+			lastFourDigits: lastFourDigits.trim() || undefined,
+			notes: notes.trim() || undefined,
+		};
 
-  const inputClass =
-    "w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent";
-  const labelClass = "block text-sm font-medium text-gray-700 mb-1";
+		if (card) {
+			updateCard(card.id, shared);
+		} else {
+			addCard(shared);
+		}
+		onClose();
+	};
 
-  return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      title={card ? "Edit Card" : "Add Card"}
-    >
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className={labelClass}>Card Name *</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g., Sapphire Reserve"
-            className={inputClass}
-            required
-          />
-        </div>
+	const inputClass =
+		"w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent";
+	const labelClass = "block text-sm font-medium text-gray-700 mb-1";
 
-        <div>
-          <label className={labelClass}>Issuer *</label>
-          <input
-            type="text"
-            value={issuer}
-            onChange={(e) => setIssuer(e.target.value)}
-            placeholder="e.g., Chase"
-            className={inputClass}
-            required
-          />
-        </div>
+	return (
+		<Modal
+			open={open}
+			onClose={onClose}
+			title={card ? "Edit Card" : "Add Card"}
+		>
+			<form onSubmit={handleSubmit} className="space-y-4">
+				<div>
+					<label className={labelClass}>Card Name *</label>
+					<input
+						type="text"
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						placeholder="e.g., Sapphire Reserve"
+						className={inputClass}
+						required
+					/>
+				</div>
 
-        <div>
-          <label className={labelClass}>Annual Fee ($)</label>
-          <input
-            type="number"
-            value={annualFee}
-            onChange={(e) => setAnnualFee(e.target.value)}
-            min="0"
-            step="1"
-            className={inputClass}
-          />
-        </div>
+				<div>
+					<label className={labelClass}>Issuer *</label>
+					<input
+						type="text"
+						value={issuer}
+						onChange={(e) => setIssuer(e.target.value)}
+						placeholder="e.g., Chase"
+						className={inputClass}
+						required
+					/>
+				</div>
 
-        <div>
-          <label className={labelClass}>Card Color</label>
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <input
-                type="color"
-                value={cardColor}
-                onChange={(e) => setCardColor(e.target.value)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-              />
-              <div
-                className="w-10 h-10 rounded-lg border-2 border-gray-300 cursor-pointer"
-                style={{ backgroundColor: cardColor }}
-              />
-            </div>
-            <div className="flex gap-1.5 flex-wrap">
-              {CARD_COLORS.map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => setCardColor(color)}
-                  className={`w-6 h-6 rounded-full border-2 transition-all ${
-                    cardColor === color
-                      ? "border-gray-900 scale-110"
-                      : "border-transparent hover:border-gray-300"
-                  }`}
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+				<div>
+					<label className={labelClass}>Annual Fee ($)</label>
+					<input
+						type="number"
+						value={annualFee}
+						onChange={(e) => setAnnualFee(e.target.value)}
+						min="0"
+						step="1"
+						className={inputClass}
+					/>
+				</div>
 
-        <div>
-          <label className={labelClass}>Last 4 Digits</label>
-          <input
-            type="text"
-            value={lastFourDigits}
-            onChange={(e) =>
-              setLastFourDigits(e.target.value.replace(/\D/g, "").slice(0, 4))
-            }
-            placeholder="1234"
-            maxLength={4}
-            className={inputClass}
-          />
-        </div>
+				<div>
+					<label className={labelClass}>Point Value (cents per point)</label>
+					<input
+						type="number"
+						value={pointValue}
+						onChange={(e) => setPointValue(e.target.value)}
+						min="0.1"
+						step="0.1"
+						placeholder="1.0"
+						className={inputClass}
+					/>
+					<p className="text-xs text-gray-400 mt-1">
+						e.g., 1.2 for Delta SkyMiles, 2.0 for Chase Ultimate Rewards via travel portal
+					</p>
+				</div>
 
-        <div>
-          <label className={labelClass}>Notes</label>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Any notes about this card..."
-            rows={2}
-            className={inputClass}
-          />
-        </div>
+				<div>
+					<label className={labelClass}>Rewards Currency</label>
+					<input
+						type="text"
+						value={rewardsCurrency}
+						onChange={(e) => setRewardsCurrency(e.target.value)}
+						placeholder="e.g., SkyMiles, Ultimate Rewards, ThankYou Points"
+						className={inputClass}
+					/>
+				</div>
 
-        <div className="flex gap-3 justify-end pt-2">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
-          >
-            {card ? "Save Changes" : "Add Card"}
-          </button>
-        </div>
-      </form>
-    </Modal>
-  );
+				<div>
+					<label className={labelClass}>Card Color</label>
+					<div className="flex items-center gap-3">
+						<div className="relative">
+							<input
+								type="color"
+								value={cardColor}
+								onChange={(e) => setCardColor(e.target.value)}
+								className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+							/>
+							<div
+								className="w-10 h-10 rounded-lg border-2 border-gray-300 cursor-pointer"
+								style={{ backgroundColor: cardColor }}
+							/>
+						</div>
+						<div className="flex gap-1.5 flex-wrap">
+							{CARD_COLORS.map((color) => (
+								<button
+									key={color}
+									type="button"
+									onClick={() => setCardColor(color)}
+									className={`w-6 h-6 rounded-full border-2 transition-all ${
+										cardColor === color
+											? "border-gray-900 scale-110"
+											: "border-transparent hover:border-gray-300"
+									}`}
+									style={{ backgroundColor: color }}
+								/>
+							))}
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<label className={labelClass}>Last 4 Digits</label>
+					<input
+						type="text"
+						value={lastFourDigits}
+						onChange={(e) =>
+							setLastFourDigits(e.target.value.replace(/\D/g, "").slice(0, 4))
+						}
+						placeholder="1234"
+						maxLength={4}
+						className={inputClass}
+					/>
+				</div>
+
+				<div>
+					<label className={labelClass}>Notes</label>
+					<textarea
+						value={notes}
+						onChange={(e) => setNotes(e.target.value)}
+						placeholder="Any notes about this card..."
+						rows={2}
+						className={inputClass}
+					/>
+				</div>
+
+				<div className="flex gap-3 justify-end pt-2">
+					<button
+						type="button"
+						onClick={onClose}
+						className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+					>
+						Cancel
+					</button>
+					<button
+						type="submit"
+						className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
+					>
+						{card ? "Save Changes" : "Add Card"}
+					</button>
+				</div>
+			</form>
+		</Modal>
+	);
 }

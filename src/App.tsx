@@ -5,13 +5,13 @@ import { CardList } from "./components/cards/CardList";
 import { CardDetail } from "./components/cards/CardDetail";
 
 export default function App() {
-  return (
-    <AppShell>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/cards" element={<CardList />} />
-        <Route path="/cards/:id" element={<CardDetail />} />
-      </Routes>
-    </AppShell>
-  );
+	return (
+		<AppShell>
+			<Routes>
+				<Route path="/" element={<Dashboard />} />
+				<Route path="/cards" element={<CardList />} />
+				<Route path="/cards/:id" element={<CardDetail />} />
+			</Routes>
+		</AppShell>
+	);
 }

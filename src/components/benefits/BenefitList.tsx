@@ -5,85 +5,85 @@ import { BenefitCard } from "./BenefitCard";
 import { BenefitForm } from "./BenefitForm";
 
 interface BenefitListProps {
-  cardId: string;
-  benefits: Benefit[];
+	cardId: string;
+	benefits: Benefit[];
 }
 
 export function BenefitList({ cardId, benefits }: BenefitListProps) {
-  const [showForm, setShowForm] = useState(false);
-  const [editingBenefit, setEditingBenefit] = useState<Benefit | null>(null);
+	const [showForm, setShowForm] = useState(false);
+	const [editingBenefit, setEditingBenefit] = useState<Benefit | null>(null);
 
-  const grouped = {
-    monthly: benefits.filter((b) => b.period === "monthly"),
-    quarterly: benefits.filter((b) => b.period === "quarterly"),
-    "semi-annual": benefits.filter((b) => b.period === "semi-annual"),
-    annual: benefits.filter((b) => b.period === "annual"),
-  };
+	const grouped = {
+		monthly: benefits.filter((b) => b.period === "monthly"),
+		quarterly: benefits.filter((b) => b.period === "quarterly"),
+		"semi-annual": benefits.filter((b) => b.period === "semi-annual"),
+		annual: benefits.filter((b) => b.period === "annual"),
+	};
 
-  const periodLabels = {
-    monthly: "Monthly",
-    quarterly: "Quarterly",
-    "semi-annual": "Semi-Annual",
-    annual: "Annual",
-  } as const;
+	const periodLabels = {
+		monthly: "Monthly",
+		quarterly: "Quarterly",
+		"semi-annual": "Semi-Annual",
+		annual: "Annual",
+	} as const;
 
-  const periods = (
-    ["monthly", "quarterly", "semi-annual", "annual"] as const
-  ).filter((p) => grouped[p].length > 0);
+	const periods = (
+		["monthly", "quarterly", "semi-annual", "annual"] as const
+	).filter((p) => grouped[p].length > 0);
 
-  return (
-    <div className="bg-white rounded-xl border border-gray-200">
-      <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
-        <h2 className="font-semibold text-gray-900">Benefits & Credits</h2>
-        <button
-          onClick={() => setShowForm(true)}
-          className="flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
-        >
-          <Plus size={16} />
-          Add
-        </button>
-      </div>
+	return (
+		<div className="bg-white rounded-xl border border-gray-200">
+			<div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
+				<h2 className="font-semibold text-gray-900">Benefits & Credits</h2>
+				<button
+					onClick={() => setShowForm(true)}
+					className="flex items-center gap-1.5 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
+				>
+					<Plus size={16} />
+					Add
+				</button>
+			</div>
 
-      {benefits.length === 0 ? (
-        <p className="px-5 py-8 text-center text-gray-400 text-sm">
-          No benefits tracked. Add credits and perks that come with this card.
-        </p>
-      ) : (
-        <div className="divide-y divide-gray-100">
-          {periods.map((period) => (
-            <div key={period}>
-              <div className="px-5 py-2 bg-gray-50">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  {periodLabels[period]}
-                </h3>
-              </div>
-              {grouped[period].map((benefit) => (
-                <BenefitCard
-                  key={benefit.id}
-                  cardId={cardId}
-                  benefit={benefit}
-                  onEdit={() => setEditingBenefit(benefit)}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
+			{benefits.length === 0 ? (
+				<p className="px-5 py-8 text-center text-gray-400 text-sm">
+					No benefits tracked. Add credits and perks that come with this card.
+				</p>
+			) : (
+				<div className="divide-y divide-gray-100">
+					{periods.map((period) => (
+						<div key={period}>
+							<div className="px-5 py-2 bg-gray-50">
+								<h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+									{periodLabels[period]}
+								</h3>
+							</div>
+							{grouped[period].map((benefit) => (
+								<BenefitCard
+									key={benefit.id}
+									cardId={cardId}
+									benefit={benefit}
+									onEdit={() => setEditingBenefit(benefit)}
+								/>
+							))}
+						</div>
+					))}
+				</div>
+			)}
 
-      <BenefitForm
-        open={showForm}
-        onClose={() => setShowForm(false)}
-        cardId={cardId}
-      />
+			<BenefitForm
+				open={showForm}
+				onClose={() => setShowForm(false)}
+				cardId={cardId}
+			/>
 
-      {editingBenefit && (
-        <BenefitForm
-          open={!!editingBenefit}
-          onClose={() => setEditingBenefit(null)}
-          cardId={cardId}
-          benefit={editingBenefit}
-        />
-      )}
-    </div>
-  );
+			{editingBenefit && (
+				<BenefitForm
+					open={!!editingBenefit}
+					onClose={() => setEditingBenefit(null)}
+					cardId={cardId}
+					benefit={editingBenefit}
+				/>
+			)}
+		</div>
+	);
 }
