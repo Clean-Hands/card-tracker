@@ -46,12 +46,10 @@ export function CardDetail() {
 							<p className="text-gray-500 mt-1">{card.issuer}</p>
 						</div>
 						<div className="flex items-center gap-4">
-							{card.pointValue !== 1 && (
-								<span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">
-									{card.pointValue}cpp
-									{card.rewardsCurrency ? ` ${card.rewardsCurrency}` : ""}
-								</span>
-							)}
+							<span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">
+								{card.pointValue ? ` ${card.pointValue}` : "1"} cpp
+								{card.rewardsCurrency ? ` ${card.rewardsCurrency}` : ""}
+							</span>
 							<span className="text-lg font-semibold text-gray-700">
 								${card.annualFee}/yr
 							</span>

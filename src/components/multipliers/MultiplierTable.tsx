@@ -16,6 +16,7 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 
 	const [adding, setAdding] = useState(false);
 	const [newCategory, setNewCategory] = useState("");
+	const [customCategory, setCustomCategory] = useState("");
 	const [newMultiplier, setNewMultiplier] = useState("1");
 	const [newNotes, setNewNotes] = useState("");
 	const [newCap, setNewCap] = useState("");
@@ -35,16 +36,29 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 	);
 
 	const handleAdd = () => {
-		if (!newCategory.trim()) return;
-		const capVal = Number(newCap) || undefined;
-		setMultiplier(cardId, {
-			category: newCategory.trim(),
-			multiplier: Number(newMultiplier) || 1,
-			notes: newNotes.trim() || undefined,
-			capAmount: capVal,
-			capPeriod: capVal ? newCapPeriod : undefined,
-		});
+		if (newCategory === "__custom") {
+			if (!customCategory.trim()) return;
+			const capVal = Number(newCap) || undefined;
+			setMultiplier(cardId, {
+				category: customCategory.trim(),
+				multiplier: Number(newMultiplier) || 1,
+				notes: newNotes.trim() || undefined,
+				capAmount: capVal,
+				capPeriod: capVal ? newCapPeriod : undefined,
+			});
+		} else {
+			if (!newCategory.trim()) return;
+			const capVal = Number(newCap) || undefined;
+			setMultiplier(cardId, {
+				category: newCategory.trim(),
+				multiplier: Number(newMultiplier) || 1,
+				notes: newNotes.trim() || undefined,
+				capAmount: capVal,
+				capPeriod: capVal ? newCapPeriod : undefined,
+			});
+		}
 		setNewCategory("");
+		setCustomCategory("");
 		setNewMultiplier("1");
 		setNewNotes("");
 		setNewCap("");
@@ -212,8 +226,8 @@ export function MultiplierTable({ cardId, multipliers }: MultiplierTableProps) {
 						{newCategory === "__custom" && (
 							<input
 								type="text"
-								value=""
-								onChange={(e) => setNewCategory(e.target.value)}
+								value={customCategory}
+								onChange={(e) => setCustomCategory(e.target.value)}
 								placeholder="Type custom category name..."
 								className="w-full px-2 py-1.5 border border-gray-300 rounded text-sm"
 								autoFocus
