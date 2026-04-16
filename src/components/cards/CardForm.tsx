@@ -104,7 +104,7 @@ export function CardForm({ open, onClose, card }: CardFormProps) {
 						value={pointValue}
 						onChange={(e) => setPointValue(e.target.value)}
 						min="0.1"
-						step="0.1"
+						step="0.01"
 						placeholder="1.0"
 						className="form-input"
 					/>
