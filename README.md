@@ -39,6 +39,18 @@ npm run build
 npm run preview
 ```
 
+## Deployment
+
+The app auto-deploys to GitHub Pages on every push to `main` via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). The live URL is:
+
+**https://clean-hands.github.io/card-tracker/**
+
+To enable Pages deployment on a fresh repo: go to **Settings → Pages → Source** and select **GitHub Actions**.
+
+## Install on iPhone
+
+The app is a PWA — open the live URL in Safari, tap **Share → Add to Home Screen**, and it'll launch fullscreen with its own icon. Service worker caches assets for offline use.
+
 ## Project Structure
 
 ```
