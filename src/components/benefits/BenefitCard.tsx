@@ -19,8 +19,17 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 	const deleteBenefit = useCardStore((s) => s.deleteBenefit);
 
 	const used = isBenefitUsedInCurrentPeriod(benefit);
-	const periodKey = getCurrentPeriodKey(benefit.period);
-	const endDate = getPeriodEndDate(benefit.period);
+	const opts = {
+		periodYears: benefit.periodYears,
+		anchorYear: benefit.periodAnchorYear,
+	};
+	const periodKey = getCurrentPeriodKey(benefit.period, new Date(), opts);
+	const endDate = getPeriodEndDate(benefit.period, new Date(), opts);
+
+	const displayPeriod =
+		benefit.period === "multi-year" && benefit.periodYears
+			? `${endDate.getFullYear() - benefit.periodYears + 1}–${endDate.getFullYear()}`
+			: periodKey;
 	const daysLeft = Math.ceil(
 		(endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
 	);
@@ -61,7 +70,7 @@ export function BenefitCard({ cardId, benefit, onEdit }: BenefitCardProps) {
 				</div>
 				<div className="flex items-center gap-2 mt-0.5">
 					<span className="text-xs text-gray-400">
-						{getPeriodLabel(benefit.period)} &middot; {periodKey}
+						{getPeriodLabel(benefit.period, benefit.periodYears)} &middot; {displayPeriod}
 					</span>
 					{!used && (
 						<span className={badgeClass}>{daysLeft}d left</span>

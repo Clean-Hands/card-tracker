@@ -131,7 +131,11 @@ export const useCardStore = create<CardStore>()(
 							...c,
 							benefits: c.benefits.map((b) => {
 								if (b.id !== benefitId) return b;
-								const currentKey = getCurrentPeriodKey(b.period);
+								const currentKey = getCurrentPeriodKey(
+									b.period,
+									new Date(),
+									{ periodYears: b.periodYears, anchorYear: b.periodAnchorYear }
+								);
 								const existingIdx = b.usageHistory.findIndex(
 									(r) => r.periodKey === currentKey
 								);

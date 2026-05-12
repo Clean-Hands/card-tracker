@@ -1,7 +1,12 @@
 export type CardId = string;
 export type BenefitId = string;
 
-export type BenefitPeriod = "monthly" | "quarterly" | "semi-annual" | "annual";
+export type BenefitPeriod =
+	| "monthly"
+	| "quarterly"
+	| "semi-annual"
+	| "annual"
+	| "multi-year";
 
 export type CapPeriod = "monthly" | "quarterly" | "semi-annual" | "annual";
 
@@ -25,6 +30,8 @@ export interface Benefit {
 	name: string;
 	value: number;
 	period: BenefitPeriod;
+	periodYears?: number; // required when period === "multi-year"
+	periodAnchorYear?: number; // start year of the first window for multi-year benefits
 	description?: string;
 	usageHistory: UsageRecord[];
 }
@@ -51,6 +58,8 @@ export interface ExpirationItem {
 	benefitName: string;
 	value: number;
 	period: BenefitPeriod;
+	periodYears?: number;
+	periodAnchorYear?: number;
 	endDate: Date;
 	daysRemaining: number;
 }

@@ -18,6 +18,9 @@ export function BenefitList({ cardId, benefits }: BenefitListProps) {
 		quarterly: benefits.filter((b) => b.period === "quarterly"),
 		"semi-annual": benefits.filter((b) => b.period === "semi-annual"),
 		annual: benefits.filter((b) => b.period === "annual"),
+		"multi-year": benefits
+			.filter((b) => b.period === "multi-year")
+			.sort((a, b) => (a.periodYears ?? 0) - (b.periodYears ?? 0)),
 	};
 
 	const periodLabels = {
@@ -25,10 +28,11 @@ export function BenefitList({ cardId, benefits }: BenefitListProps) {
 		quarterly: "Quarterly",
 		"semi-annual": "Semi-Annual",
 		annual: "Annual",
+		"multi-year": "Multi-Year",
 	} as const;
 
 	const periods = (
-		["monthly", "quarterly", "semi-annual", "annual"] as const
+		["monthly", "quarterly", "semi-annual", "annual", "multi-year"] as const
 	).filter((p) => grouped[p].length > 0);
 
 	return (

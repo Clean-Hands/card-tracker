@@ -22,13 +22,15 @@ export function calculateValueSummary(cards: CreditCard[]): ValueSummaryData {
 	let totalRedeemedAllTime = 0;
 
 	const now = new Date();
-	const year = String(now.getFullYear());
+	const year = now.getFullYear();
+	const yearStr = String(year);
 
 	for (const card of cards) {
 		totalAnnualFees += card.annualFee;
 
 		for (const benefit of card.benefits) {
-			const annualValue = benefit.value * getAnnualFrequency(benefit.period);
+			const annualValue =
+				benefit.value * getAnnualFrequency(benefit.period, benefit.periodYears);
 			totalPotentialValue += annualValue;
 
 			if (isBenefitUsedInCurrentPeriod(benefit)) {
@@ -37,17 +39,26 @@ export function calculateValueSummary(cards: CreditCard[]): ValueSummaryData {
 				totalUnusedThisPeriod += benefit.value;
 			}
 
-			// Sum all redeemed periods within the current year
-			const currentPeriodKey = getCurrentPeriodKey(benefit.period, now);
+			const currentPeriodKey = getCurrentPeriodKey(benefit.period, now, {
+				periodYears: benefit.periodYears,
+				anchorYear: benefit.periodAnchorYear,
+			});
+
+			// Count any redemption with a usedDate in the current year
+			// (or, for legacy records without usedDate, fall back to periodKey prefix)
 			for (const record of benefit.usageHistory) {
-				if (record.used && record.periodKey.startsWith(year)) {
-					// Avoid double-counting the current period (already in totalRedeemedThisPeriod)
-					if (record.periodKey !== currentPeriodKey) {
-						totalRedeemedAllTime += benefit.value;
-					}
+				if (!record.used) continue;
+				if (record.periodKey === currentPeriodKey) continue; // handled below
+
+				const inCurrentYear = record.usedDate
+					? new Date(record.usedDate).getFullYear() === year
+					: record.periodKey.startsWith(yearStr);
+
+				if (inCurrentYear) {
+					totalRedeemedAllTime += benefit.value;
 				}
 			}
-			// Add current period if used
+
 			if (isBenefitUsedInCurrentPeriod(benefit)) {
 				totalRedeemedAllTime += benefit.value;
 			}

@@ -60,7 +60,7 @@ export function UpcomingExpirations({ cards }: UpcomingExpirationsProps) {
 										</Link>
 									</td>
 									<td className="px-5 py-3 text-gray-500">
-										{getPeriodLabel(item.period)}
+										{getPeriodLabel(item.period, item.periodYears)}
 									</td>
 									<td className="px-5 py-3 font-semibold text-green-600">
 										${item.value}

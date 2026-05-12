@@ -19,26 +19,38 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 	const [period, setPeriod] = useState<BenefitPeriod>(
 		benefit?.period ?? "monthly"
 	);
+	const [periodYears, setPeriodYears] = useState(
+		String(benefit?.periodYears ?? 4)
+	);
+	const [periodAnchorYear, setPeriodAnchorYear] = useState(
+		String(benefit?.periodAnchorYear ?? new Date().getFullYear())
+	);
 	const [description, setDescription] = useState(benefit?.description ?? "");
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!name.trim() || !value) return;
 
+		const years =
+			period === "multi-year" ? Math.max(2, Number(periodYears) || 2) : undefined;
+		const anchor =
+			period === "multi-year"
+				? Number(periodAnchorYear) || new Date().getFullYear()
+				: undefined;
+
+		const payload = {
+			name: name.trim(),
+			value: Number(value) || 0,
+			period,
+			periodYears: years,
+			periodAnchorYear: anchor,
+			description: description.trim() || undefined,
+		};
+
 		if (benefit) {
-			updateBenefit(cardId, benefit.id, {
-				name: name.trim(),
-				value: Number(value) || 0,
-				period,
-				description: description.trim() || undefined,
-			});
+			updateBenefit(cardId, benefit.id, payload);
 		} else {
-			addBenefit(cardId, {
-				name: name.trim(),
-				value: Number(value) || 0,
-				period,
-				description: description.trim() || undefined,
-			});
+			addBenefit(cardId, payload);
 		}
 		onClose();
 	};
@@ -87,8 +99,40 @@ export function BenefitForm({ open, onClose, cardId, benefit }: BenefitFormProps
 						<option value="quarterly">Quarterly</option>
 						<option value="semi-annual">Semi-Annual</option>
 						<option value="annual">Annual</option>
+						<option value="multi-year">Every N Years</option>
 					</select>
 				</div>
+
+				{period === "multi-year" && (
+					<div className="grid grid-cols-2 gap-3">
+						<div>
+							<label className="form-label">Years between resets *</label>
+							<input
+								type="number"
+								value={periodYears}
+								onChange={(e) => setPeriodYears(e.target.value)}
+								placeholder="e.g. 4"
+								min="2"
+								step="1"
+								className="form-input"
+								required
+							/>
+						</div>
+						<div>
+							<label className="form-label">Window start year *</label>
+							<input
+								type="number"
+								value={periodAnchorYear}
+								onChange={(e) => setPeriodAnchorYear(e.target.value)}
+								placeholder={String(new Date().getFullYear())}
+								min="1900"
+								step="1"
+								className="form-input"
+								required
+							/>
+						</div>
+					</div>
+				)}
 
 				<div>
 					<label className="form-label">Description</label>
