@@ -59,53 +59,55 @@ export function BestCardLookup({ cards }: BestCardLookupProps) {
 					rankings.map((rank, i) => (
 						<div
 							key={rank.cardId}
-							className={`px-5 py-3 flex items-center gap-3 ${
-								i === 0 ? "bg-amber-50/50" : ""
-							}`}
+							className={`px-5 py-3 ${i === 0 ? "bg-amber-50/50" : ""}`}
 						>
-							{i === 0 ? (
-								<Trophy size={16} className="text-amber-500 flex-shrink-0" />
-							) : (
-								<span className="w-4 text-center text-xs text-gray-400 flex-shrink-0">
-									{i + 1}
-								</span>
+							<div className="flex items-center gap-3">
+								{i === 0 ? (
+									<Trophy size={16} className="text-amber-500 flex-shrink-0" />
+								) : (
+									<span className="w-4 text-center text-xs text-gray-400 flex-shrink-0">
+										{i + 1}
+									</span>
+								)}
+								<div
+									className="w-2 h-2 rounded-full flex-shrink-0"
+									style={{ backgroundColor: rank.cardColor }}
+								/>
+								<div className="flex-1 min-w-0">
+									<Link
+										to={`/cards/${rank.cardId}`}
+										className="text-sm font-medium text-gray-800 hover:text-indigo-600"
+									>
+										{rank.cardName}
+									</Link>
+									<p className="text-xs text-gray-400">{rank.issuer}</p>
+								</div>
+								<div className="text-right flex-shrink-0">
+									<span
+										className={`text-sm font-bold ${
+											i === 0 ? "text-amber-600" : "text-indigo-600"
+										}`}
+									>
+										{rank.effectiveValue}x
+									</span>
+									{rank.pointValue !== 1 && (
+										<p className="text-xs text-gray-400">
+											{rank.multiplier}x &times; {rank.pointValue}cpp
+											{rank.rewardsCurrency ? ` (${rank.rewardsCurrency})` : ""}
+										</p>
+									)}
+									{rank.capAmount && (
+										<p className="text-xs text-gray-400">
+											cap: ${rank.capAmount.toLocaleString()}{getPeriodShortLabel(rank.capPeriod ?? "annual")}
+										</p>
+									)}
+								</div>
+							</div>
+							{rank.notes && (
+								<p className="text-xs text-gray-500 italic mt-1.5 pl-9 leading-snug">
+									{rank.notes}
+								</p>
 							)}
-							<div
-								className="w-2 h-2 rounded-full flex-shrink-0"
-								style={{ backgroundColor: rank.cardColor }}
-							/>
-							<div className="flex-1 min-w-0">
-								<Link
-									to={`/cards/${rank.cardId}`}
-									className="text-sm font-medium text-gray-800 hover:text-indigo-600"
-								>
-									{rank.cardName}
-								</Link>
-								<p className="text-xs text-gray-400">{rank.issuer}</p>
-							</div>
-							<div className="text-right flex-shrink-0">
-								<span
-									className={`text-sm font-bold ${
-										i === 0 ? "text-amber-600" : "text-indigo-600"
-									}`}
-								>
-									{rank.effectiveValue}x
-								</span>
-								{rank.pointValue !== 1 && (
-									<p className="text-xs text-gray-400">
-										{rank.multiplier}x &times; {rank.pointValue}cpp
-										{rank.rewardsCurrency ? ` (${rank.rewardsCurrency})` : ""}
-									</p>
-								)}
-								{rank.capAmount && (
-									<p className="text-xs text-gray-400">
-										cap: ${rank.capAmount.toLocaleString()}{getPeriodShortLabel(rank.capPeriod ?? "annual")}
-									</p>
-								)}
-								{rank.notes && (
-									<p className="text-xs text-gray-400">{rank.notes}</p>
-								)}
-							</div>
 						</div>
 					))
 				)}

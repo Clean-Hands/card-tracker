@@ -53,7 +53,7 @@ export function UpcomingExpirations({ cards }: UpcomingExpirationsProps) {
 											className="text-gray-600 hover:text-indigo-600 flex items-center gap-2"
 										>
 											<div
-												className="w-2 h-2 rounded-full"
+												className="w-2 h-2 rounded-full flex-shrink-0"
 												style={{ backgroundColor: item.cardColor }}
 											/>
 											{item.cardName}
@@ -76,7 +76,7 @@ export function UpcomingExpirations({ cards }: UpcomingExpirationsProps) {
 													: item.daysRemaining <= 7
 														? "badge-warning"
 														: "badge-neutral"
-											} px-2 py-1`}
+											} px-2 py-1 whitespace-nowrap`}
 										>
 											{item.daysRemaining} day{item.daysRemaining !== 1 ? "s" : ""}
 										</span>
