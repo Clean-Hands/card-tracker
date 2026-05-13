@@ -41,19 +41,21 @@ export function CardDetail() {
 			<div className="card overflow-hidden mb-6">
 				<div className="h-3" style={{ backgroundColor: card.cardColor }} />
 				<div className="p-6">
-					<div className="flex items-start justify-between">
+					<div className="flex items-start justify-between gap-3">
 						<div>
 							<h1 className="text-2xl font-bold text-gray-900">{card.name}</h1>
 							<p className="text-gray-500 mt-1">{card.issuer}</p>
 						</div>
-						<div className="flex items-center gap-4">
-							<span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">
-								{card.pointValue ? ` ${card.pointValue}` : "1"} cpp
-								{card.rewardsCurrency ? ` ${card.rewardsCurrency}` : ""}
-							</span>
-							<span className="text-lg font-semibold text-gray-700">
-								${card.annualFee}/yr
-							</span>
+						<div className="flex items-start gap-2">
+							<div className="flex flex-col items-end gap-1">
+								<span className="text-lg font-semibold text-gray-700 whitespace-nowrap">
+									${card.annualFee}/yr
+								</span>
+								<span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded whitespace-nowrap">
+									{card.pointValue ? card.pointValue : 1} cpp
+									{card.rewardsCurrency ? ` ${card.rewardsCurrency}` : ""}
+								</span>
+							</div>
 							<button
 								type="button"
 								onClick={() => setEditing(true)}
